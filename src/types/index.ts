@@ -8,5 +8,5 @@ interface ISuperMap<K, V> extends Map<K, V> {
     reduce<I = undefined>(reducer: Reducer<K, V, I>, initialValue?: I): I extends undefined ? V : I;
 }
 
-export { ISuperMap }
+export { ISuperMap, Reducer, Predicate }
 

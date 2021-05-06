@@ -1,4 +1,4 @@
-import { ISuperMap } from '$types';
+import { ISuperMap, Reducer, Predicate } from '$types';
 
 const assertion = (v: any): v is Function => {
     return typeof v === "function";
