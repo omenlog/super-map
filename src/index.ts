@@ -1,19 +1,11 @@
-type Predicate<K, V> = (value: V, key: K, m: SuperMap<K, V>) => boolean
-type Reducer<K, V, I, R = I extends undefined ? V : I> = (acc: R, value: V, key: K, m: SuperMap<K, V>) => R
-
-interface SuperMap<K, V> extends Map<K, V> {
-    get(k: K, defaultValue?: V): V | undefined;
-    update(k: K, newValue: V | ((arg?: V) => V)): this;
-    filter(predicate: Predicate<K, V>): SuperMap<K, V>;
-    reduce<I = undefined>(reducer: Reducer<K, V, I>, initialValue?: I): I extends undefined ? V : I;
-}
+import { ISuperMap } from '$types';
 
 const assertion = (v: any): v is Function => {
     return typeof v === "function";
 }
 
-function SuperMap<K, V>(args?: [K, V][]): SuperMap<K, V> {
-    const map = new Map<K, V>(args) as SuperMap<K, V>;
+function ISuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
+    const map = new Map<K, V>(args) as ISuperMap<K, V>;
 
     const getter = map.get;
 
@@ -47,7 +39,7 @@ function SuperMap<K, V>(args?: [K, V][]): SuperMap<K, V> {
 
     Object.defineProperty(map, 'filter', {
         value(p: Predicate<K, V>) {
-            const newMap = SuperMap<K, V>();
+            const newMap = ISuperMap<K, V>();
 
             for (const [key, value] of map.entries()) {
                 if (p(value, key, map) === true) {
@@ -61,10 +53,10 @@ function SuperMap<K, V>(args?: [K, V][]): SuperMap<K, V> {
 
     Object.defineProperty(map, 'reduce', {
         enumerable: false,
-        value<I = undefined>(reducer: Reducer<K,V,I>, initialValue ?: I){
+        value<I = undefined>(reducer: Reducer<K, V, I>, initialValue?: I) {
             const entriesIterator = map.entries();
             let accumulator = initialValue ?? entriesIterator.next().value[1];
-            for(const [key, value] of entriesIterator){
+            for (const [key, value] of entriesIterator) {
                 accumulator = reducer(accumulator, value, key, map);
             }
 
@@ -76,4 +68,4 @@ function SuperMap<K, V>(args?: [K, V][]): SuperMap<K, V> {
     return map;
 }
 
-export { SuperMap };
+export { ISuperMap as SuperMap };
