@@ -2,6 +2,8 @@
 
 ![Build](https://github.com/omenlog/super-map/actions/workflows/pull-request.yml/badge.svg)
 
+[![Coverage Status](https://coveralls.io/repos/github/omenlog/super-map/badge.svg?branch=master)](https://coveralls.io/github/omenlog/super-map?branch=master)
+
 __SuperMap__ is a zero dependency ADT like [JS MAP](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Map) but with super powers 😎, is implemented with [Typescript](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) so it's completely typed.
 
 This package is 100% compatible with the `Map` structure built in the language by default, indeed the original one is used under the hood and the new features are implemented using [Monkey Patching](https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/).
