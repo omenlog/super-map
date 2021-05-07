@@ -1,6 +1,8 @@
 # SuperMap
 
-![Build](https://github.com/omenlog/super-map/workflows/CI/badge.svg)
+![Build](https://github.com/omenlog/super-map/actions/workflows/pull-request.yml/badge.svg)
+
+[![Coverage Status](https://coveralls.io/repos/github/omenlog/super-map/badge.svg?branch=master)](https://coveralls.io/github/omenlog/super-map?branch=master)
 
 __SuperMap__ is a zero dependency ADT like [JS MAP](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Map) but with super powers 😎, is implemented with [Typescript](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) so it's completely typed.
 
