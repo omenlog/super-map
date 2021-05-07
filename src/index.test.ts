@@ -141,4 +141,16 @@ describe("Super Map", () => {
         expect(reducer.mock.calls[0]).toEqual([1, 1, "key", map]);
         expect(reducer.mock.calls[1]).toEqual([10, 2, "another-key", map]);
     });
+
+    it("should allow map a function over the values stored in the Supermap", () => {
+        const superMap = SuperMap([["key", 1], ["another-key", 2]]);
+
+        const double = (x: number) => x * 2;
+        const newSuperMap = superMap.map(double);
+
+        expect(newSuperMap === superMap).toBe(false);
+        expect([...newSuperMap.entries()]).toEqual([["key", 2], ["another-key", 4]]);
+
+        expect(SuperMap().map(() => 1).size).toBe(0);
+    });
 });

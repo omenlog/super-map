@@ -1,10 +1,10 @@
-import { ISuperMap, Reducer, Predicate } from '$types';
+import { ISuperMap, Reducer, Predicate, Mapper } from 'types';
 
 const assertion = (v: any): v is Function => {
     return typeof v === "function";
 }
 
-function ISuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
+function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
     const map = new Map<K, V>(args) as ISuperMap<K, V>;
 
     const getter = map.get;
@@ -39,7 +39,7 @@ function ISuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
 
     Object.defineProperty(map, 'filter', {
         value(p: Predicate<K, V>) {
-            const newMap = ISuperMap<K, V>();
+            const newMap = SuperMap<K, V>();
 
             for (const [key, value] of map.entries()) {
                 if (p(value, key, map) === true) {
@@ -64,8 +64,21 @@ function ISuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
         }
     });
 
+    Object.defineProperty(map, "map", {
+        enumerable: false,
+        value<R>(mapper: Mapper<K, V, R>): ISuperMap<K, R> {
+            const newSuperMap = SuperMap<K, R>();
+
+            for (const [key, value] of map.entries()) {
+                const newValue = mapper(value, key, map);
+                newSuperMap.set(key, newValue);
+            }
+
+            return newSuperMap;
+        }
+    });
 
     return map;
 }
 
-export { ISuperMap as SuperMap };
+export { SuperMap };
