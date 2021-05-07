@@ -37,6 +37,7 @@ describe("Super Map", () => {
         expect(map.size).toBe(2);
         expect(map.get("key")).toBe(1);
         expect(map.get("another-key")).toBe(2);
+        expect(map.get("not-defined-key")).toBe(undefined);
     });
 
     it("should allow define a default value used as fallback during get operations", () => {
@@ -126,9 +127,11 @@ describe("Super Map", () => {
         const newMap = map.filter(value => value % 2 === 0);
         expect(newMap === map).toBe(false);
         expect(newMap.has("key")).toBe(false);
+        expect(newMap.size).toBe(1);
+        expect(newMap.get('another-key')).toBe(2);
     });
 
-    it("should implement reduce protocol", () => {
+    it("should implement reducer protocol", () => {
         const map = SuperMap([["key", 1], ["another-key", 2]]);
 
         const sum = map.reduce((acc, value) => acc + value);
