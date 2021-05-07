@@ -4,11 +4,11 @@
   "description": "Map like structure with super powers",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build tsconfig.prod.json",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "prepublish": "tsc"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
