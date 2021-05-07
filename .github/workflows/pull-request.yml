@@ -1,4 +1,4 @@
-name: Continuos Integration
+name: Tests
 
 on:
   pull_request:
@@ -19,4 +19,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Run Tests
-        run: npm test
+        run: npm run test:coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with: 
+          github-token: ${{ secrets.GITHUB_TOKEN }}
