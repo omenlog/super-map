@@ -1,4 +1,4 @@
-name: Tests
+name: tests
 
 on:
   pull_request:
@@ -20,7 +20,3 @@ jobs:
         run: npm install
       - name: Run Tests
         run: npm run test:coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with: 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
