@@ -1,12 +1,12 @@
-name: tests
+
+name: build
 
 on:
-  pull_request:
-    branches:
-      - master
+  release:
+    types: [created]
 
 jobs:
-  tests:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install Dependencies
         run: npm install
-      - name: Run Tests
-        run: npm run test:coverage
+      - name: Publish package
+        run: npm publish
+        uses:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        
