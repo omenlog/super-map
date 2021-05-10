@@ -1,0 +1,26 @@
+
+name: build
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install Dependencies
+        run: npm install
+      - name: Publish package
+        run: npm publish
+        uses:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        
