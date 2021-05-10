@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Map like structure with super powers",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --build tsconfig.prod.json",
     "test": "jest",
