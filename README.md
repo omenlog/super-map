@@ -18,7 +18,7 @@ npm install @omenlog/super-map
 __SuperMap__ is a factory function so for create a new super map we call the function without use the `new` operator, besides that we can pass an array of key value pairs during the initialization in the same way like the JS `Map`. 
 
 ```ts
-import {SuperMap} from 'super-map';
+import { SuperMap } from '@omenlog/super-map';
 
 const map = SuperMap(); // empty superMap
 
