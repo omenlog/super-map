@@ -12,7 +12,7 @@ This package is 100% compatible with the `Map` structure built in the language b
 ## Installation
 
 ```ts
-npm install super-map
+npm install @omenlog/super-map
 ```
 
 __SuperMap__ is a factory function so for create a new super map we call the function without use the `new` operator, besides that we can pass an array of key value pairs during the initialization in the same way like the JS `Map`. 

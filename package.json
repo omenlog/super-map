@@ -1,5 +1,5 @@
 {
-  "name": "super-map",
+  "name": "@omenlog/super-map",
   "version": "1.0.0",
   "description": "Map like structure with super powers",
   "main": "dist/index.js",
