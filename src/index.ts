@@ -1,9 +1,5 @@
 import { ISuperMap, Reducer, Predicate, Mapper } from './types';
 
-const assertion = (v: any): v is Function => {
-    return typeof v === "function";
-}
-
 function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
     const map = new Map<K, V>(args) as ISuperMap<K, V>;
 
@@ -26,7 +22,7 @@ function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
     Object.defineProperty(map, 'update', {
         enumerable: false,
         value(key: K, newValue: V) {
-            if (assertion(newValue)) {
+            if (typeof newValue === "function") {
                 const oldValue = map.get(key);
                 map.set(key, newValue(oldValue));
             } else {
