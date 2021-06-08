@@ -143,9 +143,11 @@ describe("Super Map", () => {
         expect(reducer).toHaveBeenCalledTimes(map.size);
         expect(reducer.mock.calls[0]).toEqual([1, 1, "key", map]);
         expect(reducer.mock.calls[1]).toEqual([10, 2, "another-key", map]);
+
+        expect(SuperMap<string, number>().reduce((a,b) => a + b, 10)).toBe(10);
     });
 
-    it("should allow map a function over the values stored in the Supermap", () => {
+    it("should allow map a function over the values stored in the SuperMap", () => {
         const superMap = SuperMap([["key", 1], ["another-key", 2]]);
 
         const double = (x: number) => x * 2;

@@ -50,6 +50,10 @@ function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
     Object.defineProperty(map, 'reduce', {
         enumerable: false,
         value<I = undefined>(reducer: Reducer<K, V, I>, initialValue?: I) {
+            if (map.size === 0) {
+                return initialValue;
+            }
+
             const entriesIterator = map.entries();
             let accumulator = initialValue ?? entriesIterator.next().value[1];
             for (const [key, value] of entriesIterator) {
@@ -60,7 +64,7 @@ function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
         }
     });
 
-    Object.defineProperty(map, "map", {
+    Object.defineProperty(map, 'map', {
         enumerable: false,
         value<R>(mapper: Mapper<K, V, R>): ISuperMap<K, R> {
             const newSuperMap = SuperMap<K, R>();
