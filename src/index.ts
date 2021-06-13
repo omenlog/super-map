@@ -1,4 +1,4 @@
-import { ISuperMap, Reducer, Predicate, Mapper } from './types';
+import { ISuperMap, Reducer, Predicate, Mapper, AsyncReducer } from './types';
 
 function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
     const map = new Map<K, V>(args) as ISuperMap<K, V>;
@@ -75,6 +75,24 @@ function SuperMap<K, V>(args?: [K, V][]): ISuperMap<K, V> {
             }
 
             return newSuperMap;
+        }
+    });
+
+    Object.defineProperty(map, 'reduceAsync', {
+        enumerable: false,
+        value<I = undefined>(asyncReducer: AsyncReducer<K, V, I>, initialValue?: I) {
+            if(map.size === 0){
+                return Promise.resolve(initialValue);
+            }
+
+            const entriesIterator = map.entries();
+            let accumulator = Promise.resolve(initialValue ?? entriesIterator.next().value[1]);
+
+            for (const [key, value] of entriesIterator) {
+                accumulator = accumulator.then(acc => asyncReducer(acc, value, key, map));
+            }
+
+            return accumulator;
         }
     });
 
