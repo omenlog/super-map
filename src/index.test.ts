@@ -165,14 +165,13 @@ describe("Super Map", () => {
 
         const asyncAverage = await map.reduceAsync((acc, val) => {
             return new Promise((resolve) => setTimeout(() => resolve(acc + val), 0));
-        }, 0);
+        });
 
         expect(asyncAverage).toBe(3);
 
         expect(await SuperMap<string, number>().reduceAsync((a, b) => Promise.resolve(a + b), 10)).toBe(10);
         expect(await SuperMap<string, number>().reduceAsync((a, b) => Promise.resolve(a + b))).toBe(undefined);
     });
-
 
     it("should make visible errors during async reduction", () => {
         function errorAsync() {
