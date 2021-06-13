@@ -143,9 +143,11 @@ describe("Super Map", () => {
         expect(reducer).toHaveBeenCalledTimes(map.size);
         expect(reducer.mock.calls[0]).toEqual([1, 1, "key", map]);
         expect(reducer.mock.calls[1]).toEqual([10, 2, "another-key", map]);
+
+        expect(SuperMap<string, number>().reduce((a, b) => a + b, 10)).toBe(10);
     });
 
-    it("should allow map a function over the values stored in the Supermap", () => {
+    it("should allow map a function over the values stored in the SuperMap", () => {
         const superMap = SuperMap([["key", 1], ["another-key", 2]]);
 
         const double = (x: number) => x * 2;
@@ -155,5 +157,29 @@ describe("Super Map", () => {
         expect([...newSuperMap.entries()]).toEqual([["key", 2], ["another-key", 4]]);
 
         expect(SuperMap().map(() => 1).size).toBe(0);
+    });
+
+
+    it("should implement the reducer protocol asynchronously", async () => {
+        const map = SuperMap([["key", 1], ["another-key", 2]]);
+
+        const asyncAverage = await map.reduceAsync((acc, val) => {
+            return new Promise((resolve) => setTimeout(() => resolve(acc + val), 0));
+        });
+
+        expect(asyncAverage).toBe(3);
+
+        expect(await SuperMap<string, number>().reduceAsync((a, b) => Promise.resolve(a + b), 10)).toBe(10);
+        expect(await SuperMap<string, number>().reduceAsync((a, b) => Promise.resolve(a + b))).toBe(undefined);
+    });
+
+    it("should make visible errors during async reduction", () => {
+        function errorAsync() {
+            const map = SuperMap([["key", 1], ["another-key", 2]]);
+
+            return map.reduceAsync(() => Promise.reject("Error"));
+        }
+
+        expect(() => errorAsync()).rejects.toEqual("Error");
     });
 });

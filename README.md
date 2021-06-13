@@ -109,3 +109,18 @@ const sum = map.reduce((acc,value) => acc + value); // is possible  pass an init
 
 console.log(sum); // 3
 ```
+
+### `reduceAsync` 
+
+Sometimes we want to reduce our map applying some kind of async function, `SuperMap` support that use case through `reduceAsync` function.
+This function require that our reducer return a [Promise](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise), after the reduction is done we obtain a Promise with the final value.
+
+```ts
+const map = SuperMap([["key", 1], ["another-key", 2]]);
+
+const asyncAverage = await map.reduceAsync((acc, val) => {
+    return new Promise((resolve) => setTimeout(() => resolve(acc + val), 0));
+}, 0);
+
+console.log(asyncAverage) // 3;
+```
