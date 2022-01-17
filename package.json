@@ -1,6 +1,6 @@
 {
   "name": "@omenlog/super-map",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Map like structure with super powers",
   "type": "module",
   "main": "lib/cjs/index.js",
