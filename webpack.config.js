@@ -1,25 +1,31 @@
-const path = require('path');
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __dirname = dirname(fileURLToPath(import.meta.url));;
+
+export default {
     entry: './src/index.ts',
     mode: 'production',
-    module:{
-        rules:[{
+    resolve: {
+        extensions: ['.ts']
+    },
+    module: {
+        rules: [{
             test: /.ts$/,
             use: {
                 loader: 'ts-loader',
-                options:{
-                    configFile: 'tsconfig.prod.json'
+                options: {
+                    configFile: 'tsconfig-cjs.json'
                 }
             },
             exclude: /node_modules/,
         }],
     },
-    resolve: {
-        extensions: ['.ts']
-    },
     output: {
-        filename: 'index.min.js',
-        path: path.resolve(__dirname, 'dist')
-    },
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'lib/cjs/'),
+        library: 'SuperMap',
+        libraryTarget: 'umd',
+        globalObject: 'this'
+    }
 }
